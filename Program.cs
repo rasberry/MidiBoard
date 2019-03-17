@@ -2,6 +2,7 @@
 using Commons.Music.Midi;
 using System.Linq;
 using System.Threading.Tasks;
+using Eto.Forms;
 
 namespace MidiBoard
 {
@@ -9,7 +10,8 @@ namespace MidiBoard
 	{
 		static void Main(string[] args)
 		{
-
+			var app = new App(Eto.Platform.Detect);
+			app.Run();
 		}
 
 		static void Main2(string[] args)
