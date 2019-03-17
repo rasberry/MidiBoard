@@ -2,7 +2,7 @@
 using Commons.Music.Midi;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia;
+using Xwt;
 
 namespace MidiBoard
 {
@@ -10,7 +10,22 @@ namespace MidiBoard
 	{
 		static void Main(string[] args)
 		{
-			AppBuilder.Configure<App>().UsePlatformDetect().Start<MainWindow>();
+			Run(ToolkitType.Gtk);
+		}
+
+		public static void Run(ToolkitType type)
+		{
+			MainWindow w = null;
+			try {
+				Application.Initialize(type);
+				w = new MainWindow();
+				w.Show();
+				Application.Run();
+			}
+			finally {
+				w?.Dispose();
+				Application.Dispose();
+			}
 		}
 
 		static void Main2(string[] args)
