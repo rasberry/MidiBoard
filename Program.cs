@@ -2,7 +2,6 @@
 using Commons.Music.Midi;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia;
 
 namespace MidiBoard
 {
@@ -10,7 +9,7 @@ namespace MidiBoard
 	{
 		static void Main(string[] args)
 		{
-			AppBuilder.Configure<App>().UsePlatformDetect().Start<MainWindow>();
+
 		}
 
 		static void Main2(string[] args)
