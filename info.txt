@@ -37,3 +37,53 @@ C#D#EF#G#A#BC
 4D	5	F	5D	6	A	6D	8	#	7D	9	F	
 4E	5	#	5E	6	#	6E	8	D	7E	9	#	
 4F	5	G	5F	6	B	6F	8	#	7F	9	G	
+
+
+1 A    09 09
+2 B    0B 11
+3 CmD  0D 13
+4 DmE  0F 15
+5 F    11 17
+6 G    13 19
+7 A    15 21
+8 B    17 23
+9 CmD  19 25
+0 DmE  1B 27
+- F    1D 29
+= G    1F 31
+
+Q AmB  0A 10
+w C    0C 12
+E D    0E 14
+R E    10 16
+T FmG  12 18
+Y GmA  14 20
+U AmB  16 22
+I C    18 24
+O D    1A 26
+P E    1C 28
+[ FmG  1E 30
+] GmA  20 32
+
+A B    23 35
+S CmD  25 37
+D DmE  27 39
+F F    29 41
+G G    2B 43
+H A    2D 45
+J B    2F 47
+K CmD  31 49
+L DmE  33 51
+; F    35 53
+' G    37 55
+
+Z C    24 36
+X D    26 38
+C E    28 40
+V FmG  2A 42
+B GmA  2C 44
+N AmB  2E 46
+M C    30 48
+, D    32 50
+. E    34 52
+/ FmG  36 54

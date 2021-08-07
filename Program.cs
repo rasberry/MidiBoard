@@ -3,6 +3,7 @@ using Commons.Music.Midi;
 using System.Linq;
 using System.Threading.Tasks;
 using Eto.Forms;
+using System.Diagnostics;
 
 namespace MidiBoard
 {
@@ -10,14 +11,51 @@ namespace MidiBoard
 	{
 		static void Main(string[] args)
 		{
-			var app = new App(Eto.Platform.Detect);
-			app.Run();
+			//TestMidi().Wait();
+			//return;
+
+			#if DEBUG
+			Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+			#endif
+
+			using (Sound = new MidiSound())
+			{
+				var app = new App(Eto.Platform.Detect);
+				app.Initialized += WhenInitialized;
+				app.Run();
+			}
 		}
+
+		static void WhenInitialized(object s, EventArgs args)
+		{
+			Events.MidiOutputSelected += OnOutputSelected;
+			var outputs = Sound.AvailableOutputs();
+			var popArgs = new OutputPopulatedEventArgs(outputs);
+			Events.OnMidiOutputPopulated(popArgs);
+			Events.WindowKeyDown += OnWindowKeyDown;
+			Events.WindowKeyUp += OnWindowKeyUp;
+		}
+
+		static void OnOutputSelected(object s,OutputSelectedEventArgs e)
+		{
+			Sound.ChangeOutput(e.Id);
+		}
+
+		static void OnWindowKeyDown(object s, KeyEventArgs args)
+		{
+			Sound.NoteOn(MidiNote.C,MidiOctave.O4);
+		}
+
+		static void OnWindowKeyUp(object s, KeyEventArgs args)
+		{
+			Sound.NoteOff(MidiNote.C,MidiOctave.O4);
+		}
+
+		static MidiSound Sound = null;
 
 		static void Main2(string[] args)
 		{
 			// AlsaSharp.AlsaPortCapabilities
-
 
 			Task t = TestMidi();
 			t.Wait();

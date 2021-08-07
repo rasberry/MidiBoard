@@ -10,8 +10,9 @@ namespace MidiBoard
 	{
 		public IEnumerable<KeyValuePair<string,string>> AvailableOutputs()
 		{
-			var access = MidiAccessManager.Default;
-			foreach(var o in access.Outputs) {
+			Log.Debug("AvailableOutputs");
+			EnsureReady();
+			foreach(var o in Access.Outputs) {
 				yield return new KeyValuePair<string, string>(
 					o.Id,o.Name
 				);
@@ -20,6 +21,7 @@ namespace MidiBoard
 
 		public void NoteOn(MidiNote note, MidiOctave octave)
 		{
+			Log.Debug("NoteOn");
 			EnsureReady();
 			Output.Send(new byte[] {
 				MidiEvent.NoteOn, MapNote(note,octave), 0x7f
@@ -28,14 +30,24 @@ namespace MidiBoard
 
 		public void NoteOff(MidiNote note, MidiOctave octave)
 		{
+			Log.Debug("NoteOff");
 			EnsureReady();
 			Output.Send(new byte[] {
 				MidiEvent.NoteOff, MapNote(note,octave), 0x7f
 			},0,3,0);
 		}
 
+		public void ChangeOutput(string Id)
+		{
+			Log.Debug("ChangeOutput - "+Id);
+			var selected = AvailableOutputs().First(o => o.Key == Id);
+			PortId = selected.Key;
+			InitOutput();
+		}
+
 		public void Dispose()
 		{
+			Log.Debug("Dispose");
 			if (Output != null) {
 				Output.CloseAsync().Wait();
 				Output = null;
@@ -53,6 +65,10 @@ namespace MidiBoard
 
 		void InitOutput()
 		{
+			Log.Debug("InitOutput");
+			if (Access == null) {
+				throw new NullReferenceException("Access must be initialized before initializing outputs");
+			}
 			if (PortId == null) { return; }
 			if (Output != null) {
 				Output.CloseAsync().Wait();
@@ -63,6 +79,7 @@ namespace MidiBoard
 
 		void SetVoice(byte voice) //GeneralMidi.Instruments
 		{
+			Log.Debug("SetVoice");
 			EnsureReady();
 			Output.Send(new byte [] {
 				MidiEvent.Program,
